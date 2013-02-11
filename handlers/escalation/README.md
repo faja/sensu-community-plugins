@@ -6,7 +6,7 @@ Modify or add escalation scheme, you can use escalation scheme in check configur
 Escalation schemes contain one or more escalation levels. Escalation level keys:
 * start - number of occurrences when to start handle events for this level, [default=1] 
 * stop - number of occurrences, after when to stop handle events for this level, [default=end of the world]
-* refresh - frequency of handling events
+* refresh - frequency of handling events [default=3h]
 
 eg. 
 We have check with interval 60. We want to send notification to user1 for first 3 hours, every 1 hour.
