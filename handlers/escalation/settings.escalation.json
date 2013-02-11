@@ -1,0 +1,22 @@
+{
+	"escalation": {
+        	"default":{
+                	"lev_1":{
+                        	"start":3,
+	                        "stop":1500,
+        	                "refresh":10800,
+                	        "to":"user@example.com"
+                        	},
+	                "lev_2":{
+        	                "start":6,
+                	        "to":"user2@example.com"
+                        	}
+	                },
+        	"scheme2":{
+                	"lev_1":{
+                        	"to":"group@example.com"
+	                        }
+                }
+
+	}
+}
