@@ -41,7 +41,7 @@ Add custom key "escalation" to your check configuration
 ## Usage
 Modify your handler to use Escalation class, eg:
 ```
-require './escalation'
+require_relative 'escalation'
 class Mailer < Escalation
 ```
 then there are level names in @lev_array, you can can access "to" key (or any other defined) to find out to whom send notification, eg:
