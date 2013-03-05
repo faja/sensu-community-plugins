@@ -1,22 +1,30 @@
 {
-	"escalation": {
-        	"default":{
-                	"lev_1":{
-                        	"start":3,
-	                        "stop":1500,
-        	                "refresh":10800,
-                	        "to":"user@example.com"
-                        	},
-	                "lev_2":{
-        	                "start":6,
-                	        "to":"user2@example.com"
-                        	}
-	                },
-        	"scheme2":{
-                	"lev_1":{
-                        	"to":"group@example.com"
-	                        }
-                }
+"escalation": {
 
-	}
+  "keepalive":{
+    "lev_1":{
+      "refresh":"1h",
+      "to":"user1@example.com, user2@example.com"
+    }
+   },
+
+  "default":{
+    "lev_1":{
+      "start":3,
+      "stop":5,
+      "refresh":"30m",
+      "to":"user1@example.com"
+    },
+    "lev_2":{
+      "start":6,
+      "to":"user2@example.com"
+    }
+  },
+
+  "scheme2":{
+    "lev_1":{
+      "to":"group@example.com"
+    }
+  }
+}
 }
