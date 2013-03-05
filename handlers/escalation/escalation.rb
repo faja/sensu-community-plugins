@@ -17,7 +17,7 @@ class Escalation < Sensu::Handler
       filter_disabled
     end
     if @event['check']['status'] == 0
-      filter_status0
+      filter_status_zero
     else
       filter_escalation
     end
@@ -32,7 +32,7 @@ class Escalation < Sensu::Handler
     end
   end
 
-  def filter_status0
+  def filter_status_zero
     # don't handle metric type events
     exit 0 if @event['action'] != 'resolve'
     @lev_array = []
