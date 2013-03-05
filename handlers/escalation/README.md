@@ -1,29 +1,40 @@
 # Escalation for sensu handlers
 
-## Configuration files
+## Configuration
 ### settings.escalation.json
-Modify or add escalation scheme, you can use escalation scheme in check configuration file then ("escalation":"scheme_name").
+Put this file to conf.d dir and modify or add escalation scheme.
+You can use escalation scheme in check configuration file then ("escalation":"scheme_name") to escalate of handling event.
+
 Escalation schemes contain one or more escalation levels. Escalation level keys:
-* start - number of occurrences when to start handle events for this level, [default=1] 
-* stop - number of occurrences, after when to stop handle events for this level, [default=end of the world]
+* start - number of occurrences when to start handle events for this level, [default=1]
+* stop - how many times event will be handle, [default=infinity]
 * refresh - frequency of handling events (in seconds) [default=3600]
 
-eg. 
-We have check with interval 60. We want to send notification to user1 for first 3 hours, every 1 hour.
-And after 3 hours we want to send the same notification to group1, every 3 hour.
+e.g. for scheme1 below, 
+* user1 will be notified only 3 times with 30minutes refresh, starting with first event occurence
+* group1 will be notified every 3 hour, starting with 360th event occurence
+
 ```
 {
         "escalation": {
+        
+                "keepalive":{
+                        "lev_1":{
+                                "refresh":"1h",
+                                "to":"user1@example.com, user2@example.com"
+                        }
+                },
+                
                 "scheme1":{
                         "lev_1":{
                                 "start":1,
-                                "stop":10800,
-                                "refresh":3600,
+                                "stop":3,
+                                "refresh":"30m",
                                 "to":"user1@example.com"
-                                },
+                        },
                         "lev_2":{
-                                "start":10800,
-                                "refresh":10800,
+                                "start":360,
+                                "refresh":"3h",
                                 "to":"group1@example.com"
                                 }
                         }
@@ -35,7 +46,7 @@ And after 3 hours we want to send the same notification to group1, every 3 hour.
 ### check config
 Add custom key "escalation" to your check configuration
 ```
-"escalation":"scheme1"
+"escalation":"scheme_name"
 ```
 
 ## Usage
@@ -49,7 +60,7 @@ then there are level names in @lev_array, you can can access "to" key (or any ot
 def handle
         ...
         @len_array.each do |lev|
-                mail_to = settings['escalation'][@event['check']['escalation']][lev]['to']
+                mail_to = settings['escalation'][@escalation_scheme][lev]['to']
         ...
         end
 end
